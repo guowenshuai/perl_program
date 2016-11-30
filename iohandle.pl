@@ -8,10 +8,16 @@
 use strict;
 use warnings;
 
-use IO::Null;
+#use IO::Null;
 
-my $DEBUG = 1;
+#my $DEBUG = 1;
 
-my $debug_fh = $DEBUG ? *STDOUT : IO::Null->new();
+#my $debug_fh = $DEBUG ? *STDOUT : IO::Null->new();
 
-$debug_fh->print("heiheihei\n");
+#$debug_fh->print("heiheihei\n");
+#
+open my $filehandle,">","aa.txt" or die $!;
+
+$filehandle->print("hhhhh\n");
+
+$filehandle->close;
