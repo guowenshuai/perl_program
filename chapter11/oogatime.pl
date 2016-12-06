@@ -18,3 +18,5 @@ my ($sec, $min, $hour, $mday, $mon, $year, $wday) = localtime;
 
 print $year+1900,"-",Oogaboogoo::Date::number_to_month_name($mon),"-",
 	"$mday-$hour:$min:$sec ",Oogaboogoo::Date::number_to_day_name($wday);
+
+Oogaboogoo::Date->speak("hhhh\n");

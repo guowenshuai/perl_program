@@ -34,4 +34,11 @@ sub number_to_month_name
 	$month[$number];
 }
 
+sub speak
+{
+	my $class = shift;
+	print "@_\n";
+	my ($msg) = @_;
+	print "\n\nI speak: ", $msg ;
+}
 1;
