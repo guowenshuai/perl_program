@@ -5,8 +5,12 @@ use strict;
 use warnings;
 
 use parent qw(Animal);
+#use base qw(Animal);
 
 sub sound {"huoooo"};
+#sub UNIVERSAL::sing {
+#	print "\n\n!: UNIVERSAL::sing\n";
+#}
 
 =head1 NAME
 

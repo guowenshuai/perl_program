@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use parent qw(LivingCreature);
-
+use Carp qw(croak);
 #sub speak {
 #	my $class = shift;
 #	print "a $class goes ", $class->sound, "\n";
@@ -15,13 +15,80 @@ use parent qw(LivingCreature);
 #sub sound {
 #	die "You have to define sound() in a subclass";
 #}
+#
+#sub UNIVERSAL::sing {
+#print "\n\nUNIVERSAL::sing---\n";
+
+#}
+sub AUTOLOAD {
+	our $AUTOLOAD;
+	print "\n\nAUTOALOD: $AUTOLOAD\n\n";
+	(my $method = $AUTOLOAD) =~ s/.*:://s;
+	if($method eq "eat") {
+		eval q{
+		
+		sub eat {
+			my $class = shift;
+			ref $class 
+				? print $class->name, " ", ref $class, " eat " , shift, "\n"
+				: print "a unamed $class eat ", shift, "\n";
+		}
+	
+	};
+	die $@ if $@;
+	goto &eat;
+	
+	} else {
+		die $_[0]->name," does't know how to $method\n";
+	}
+
+}
 
 sub speak {
 	my $class = shift;
-	die "animal cann't speak" if @_;
+	croak "animal cann't speak" if @_;
 	$class->SUPER::speak;
 }
-sub sound {die "animal should define sound()\n"}
+sub sound {croak "animal should define sound()\n"}
+
+sub color {
+	my $class = shift;
+	ref $class 
+		? $class->{color}
+		: $class->default_color;
+}
+
+
+sub set_color {
+	ref(my $self = shift) or croak "instance variable needed";
+	$self->{color} = shift;
+}
+
+sub set_name {
+	ref(my $self = shift) or croak "instance varibale needed";
+	$self->{name} = shift;
+}
+
+sub default_color {"default color black"}
+
+sub name {
+	my $class = shift;
+	ref($class) ? $class->{name}
+				: "An unamed $class";
+}
+
+sub named {
+	ref (my $class = shift) and croak "class name needed";
+#	my $class = shift;
+#	$class = ref $class or $class;
+	
+	my $name = shift;
+	my $self = {
+		name => $name,
+		color => $class->default_color,
+	};
+	bless $self, $class;
+}
 
 =head1 NAME
 
