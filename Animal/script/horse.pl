@@ -12,6 +12,9 @@ use YAML;
 use Horse;
 use Sheep;
 
+print "=" x 50, "\n";
+print <DATA>;
+close DATA or die "can't close\n";
 my $tv_horse = Horse->named('Mr. Ed');
 $tv_horse->set_name('Mrster Ed');
 $tv_horse->set_color('grey');
@@ -30,6 +33,13 @@ eat $red_horse "mimi";
 eat Horse "gancao";
 
 print Dump(%$red_horse);
+{
+	my $hh = Horse->named("hhhhh");
+
+	print "we have:\n", map("\t$_\n", Animal->registered);
+
+}
+print "we have:\n", map("\t$_\n", Animal->registered);
 
 #my $s_red_horse = $red_horse->named("Mrs Li's son");
 
@@ -53,3 +63,8 @@ print Dump(%$red_horse);
 #}
 
 #Horse->eat("heiheihei");
+__DATA__
+i
+o
+p
+l

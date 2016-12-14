@@ -4,6 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
+use Scalar::Util qw(weaken);
 use parent qw(LivingCreature);
 use Carp qw(croak);
 #sub speak {
@@ -20,6 +21,13 @@ use Carp qw(croak);
 #print "\n\nUNIVERSAL::sing---\n";
 
 #}
+
+#print "__DATA__ is: ";
+#while( <DATA> )
+#{
+#	print $_
+#}
+#print "\n";
 sub AUTOLOAD {
 	our $AUTOLOAD;
 	print "\n\nAUTOALOD: $AUTOLOAD\n\n";
@@ -39,7 +47,7 @@ sub AUTOLOAD {
 	goto &eat;
 	
 	} else {
-		die $_[0]->name," does't know how to $method\n";
+		print "E:",$_[0]->name," does't know how to $method\n";
 	}
 
 }
@@ -76,7 +84,7 @@ sub name {
 	ref($class) ? $class->{name}
 				: "An unamed $class";
 }
-
+my %REGISTRY;
 sub named {
 	ref (my $class = shift) and croak "class name needed";
 #	my $class = shift;
@@ -88,7 +96,22 @@ sub named {
 		color => $class->default_color,
 	};
 	bless $self, $class;
+	$REGISTRY{$self} = $self;
+	weaken($REGISTRY{$self});
+	$self;
 }
+sub registered {
+
+	return map {'a '.ref($_)." named ".$_->name} values %REGISTRY;
+}
+
+sub DESTROY {
+	my $self = shift;
+	print '[', $self->name,"has die.]\n";
+	delete $REGISTRY{$self};
+}
+
+=pod
 
 =head1 NAME
 
@@ -225,3 +248,10 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =cut
 
 1; # End of Animal
+
+__END__
+
+__DATA__
+hhhhhhhhhh
+oooooooooo
+
