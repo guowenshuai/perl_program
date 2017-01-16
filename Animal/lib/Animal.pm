@@ -7,6 +7,8 @@ use warnings;
 use Scalar::Util qw(weaken);
 use parent qw(LivingCreature);
 use Carp qw(croak);
+
+use subs qw(eat);
 #sub speak {
 #	my $class = shift;
 #	print "a $class goes ", $class->sound, "\n";
@@ -33,16 +35,20 @@ sub AUTOLOAD {
 	print "\n\nAUTOALOD: $AUTOLOAD\n\n";
 	(my $method = $AUTOLOAD) =~ s/.*:://s;
 	if($method eq "eat") {
-		eval q{
-		
-		sub eat {
-			my $class = shift;
-			ref $class 
-				? print $class->name, " ", ref $class, " eat " , shift, "\n"
-				: print "a unamed $class eat ", shift, "\n";
-		}
-	
-	};
+		my $self = shift;
+		print "\n@_\n";
+		if(@_) {return $self->{$method} = shift}
+		else {return $self->{$method}}
+		#eval q{
+		#
+		#sub eat {
+		#	my $class = shift;
+		#	ref $class 
+		#		? print $class->name, " ", ref $class, " eat " , shift, "\n"
+		#		: print "a unamed $class eat ", shift, "\n";
+		#}
+		#
+		#};
 	die $@ if $@;
 	goto &eat;
 	

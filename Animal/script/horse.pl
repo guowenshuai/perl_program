@@ -30,8 +30,8 @@ print "can eat\n" if $tv_horse->can("eat");
 my $red_horse = named Horse:: "Mrs Li";
 $red_horse->sing;
 eat $red_horse "mimi";
-eat Horse "gancao";
-
+#eat Horse "gancao";
+print $red_horse->name, " eat ", $red_horse->eat, "\n";
 print Dump(%$red_horse);
 {
 	my $hh = Horse->named("hhhhh");

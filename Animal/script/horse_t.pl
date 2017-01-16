@@ -10,5 +10,7 @@ use warnings;
 
 use Horse;
 
-
+use IO::Null;
 print "hello horse\n";
+
+print "use IO::Null version: ", IO::Null->VERSION, "\n";
