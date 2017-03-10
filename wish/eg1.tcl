@@ -121,3 +121,9 @@ pack .redo -in .toolbar -side left
 pack .separ -in .toolbar -side left
 pack .reset -in .toolbar -side left
 grid .toolbar -row 5 -column 0 -sticky ew
+
+toplevel .shareText
+.text peer create .shareText.text -relief raised -bg green -yscrollcommand ".scroll2 set" -undo 1
+scrollbar .scroll2 -command ".shareText.text yview"
+
+pack .shareText.text -in .shareText 
