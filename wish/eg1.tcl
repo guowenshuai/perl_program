@@ -127,3 +127,21 @@ toplevel .shareText
 scrollbar .scroll2 -command ".shareText.text yview"
 
 pack .shareText.text -in .shareText 
+
+proc cutText {w} {
+    catch {tk_textCut $w}
+}
+proc copyText {w} {
+    catch {tk_textCopy $w}
+}
+proc pasteText {w} {
+    catch {tk_textPaste $w}
+}
+
+button .cut -text cut -command {cutText .text}
+button .copy -text copy -command {copyText .text}
+button .paste -text paste -command {pasteText .text}
+
+pack .cut -in .toolbar -side right
+pack .copy -in .toolbar -side right
+pack .paste -in .toolbar -side right
